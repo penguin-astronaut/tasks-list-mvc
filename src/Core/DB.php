@@ -11,17 +11,16 @@ class DB {
     public static function getInstance(): \PDO
     {
         if (empty(self::$instance)) {
-            $dbConfig = App::getConfig()['db'];
-
+            $config = require __DIR__ . '/../../config.php';
             $opt = [
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
                 \PDO::ATTR_EMULATE_PREPARES   => false,
             ];
 
-            $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['db_name']};charset={$dbConfig['charset']}";
+            $dsn = "mysql:host={$config['db']['host']};dbname={$config['db']['db_name']};charset={$config['db']['charset']}";
 
-            self::$instance = new \PDO($dsn, $dbConfig['user'], $dbConfig['pass'], $opt);
+            self::$instance = new \PDO($dsn, $config['db']['user'], $config['db']['pass'], $opt);
         }
 
         return self::$instance;
