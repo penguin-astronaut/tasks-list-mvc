@@ -7,6 +7,10 @@ class Tasks extends \Core\Model
     public const STATUS_READY = 'ready';
     public const STATUS_UNREADY = 'unready';
 
+    /**
+     * @param int $userId
+     * @return array
+     */
     public function get(int $userId): array
     {
         $stm = $this->db->prepare('SELECT * FROM tasks WHERE user_id = ?');
@@ -14,6 +18,11 @@ class Tasks extends \Core\Model
         return $stm->fetchAll() ?: [];
     }
 
+    /**
+     * @param string $description
+     * @param int $userId
+     * @return array|string[]
+     */
     public function create(string $description, int $userId): array
     {
         $description = trim(htmlspecialchars($description));
@@ -34,6 +43,11 @@ class Tasks extends \Core\Model
         ];
     }
 
+    /**
+     * @param int $taskId
+     * @param int $userId
+     * @return void
+     */
     public function remove(int $taskId, int $userId): void
     {
         $sql = "DELETE FROM tasks WHERE id=? AND user_id=?";
@@ -41,6 +55,10 @@ class Tasks extends \Core\Model
         $stmt->execute([$taskId, $userId]);
     }
 
+    /**
+     * @param int $userId
+     * @return void
+     */
     public function removeAll(int $userId): void
     {
         $sql = "DELETE FROM tasks WHERE user_id=?";
@@ -48,6 +66,12 @@ class Tasks extends \Core\Model
         $stmt->execute([$userId]);
     }
 
+    /**
+     * @param int $taskId
+     * @param int $userId
+     * @param string $status
+     * @return void
+     */
     public function changeStatus(int $taskId, int $userId, string $status): void
     {
         $sql = "UPDATE tasks SET status=? WHERE id=? AND user_id=?";
@@ -55,6 +79,10 @@ class Tasks extends \Core\Model
         $stmt->execute([$status, $taskId, $userId]);
     }
 
+    /**
+     * @param int $userId
+     * @return void
+     */
     public function readyAll(int $userId): void
     {
         $sql = "UPDATE tasks SET status=? WHERE user_id=?";

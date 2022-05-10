@@ -17,7 +17,7 @@ class Router
         '/remove_all' => ['IndexController', 'removeAll'],
     ];
 
-    public function goToPage(string $uri)
+    public function goToPage(string $uri): void
     {
         if (isset($_SESSION['user']) && isset($this->protectedPaths[$uri])) {
             [$controller, $method] = $this->protectedPaths[$uri];

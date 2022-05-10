@@ -6,6 +6,11 @@ class Users extends \Core\Model {
     public const STATUS_USER_NOT_FOUND = 1;
     public const STATUS_ERROR_PASSWORD = 2;
 
+    /**
+     * @param string $login
+     * @param string $password
+     * @return array|string[]
+     */
     public function checkUser(string $login, string $password): array
     {
         $login = htmlspecialchars(trim($login));
@@ -41,6 +46,12 @@ class Users extends \Core\Model {
         ];
     }
 
+    /**
+     * create User if not exist, else return exist
+     * @param string $login
+     * @param string $password
+     * @return array|string[]
+     */
     public function create(string $login, string $password): array
     {
         $login = htmlspecialchars(trim($login));
