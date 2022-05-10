@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Tasks extends \Core\Model
 {
     public const STATUS_READY = 'ready';

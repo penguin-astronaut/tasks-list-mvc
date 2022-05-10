@@ -17,7 +17,7 @@ class App {
         session_start();
 
         $router = new Router();
-        $router->goToPage($_SERVER['REQUEST_URI']);
+        $router->goToPage(strtok($_SERVER['REQUEST_URI'], '?'));
     }
 
     public static function getConfig(): array

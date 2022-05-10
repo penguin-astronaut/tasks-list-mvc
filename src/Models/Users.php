@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Users extends \Core\Model {
     public const STATUS_USER_NOT_FOUND = 1;
     public const STATUS_ERROR_PASSWORD = 2;
