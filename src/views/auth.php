@@ -1,8 +1,8 @@
 <?php
-/** @var string $error This is form error message. */
+/** @var array $data data fot view */
 ?>
 <h1>Authentication</h1>
-<form class="auth-form" action="/auth.php" method="post">
+<form class="auth-form" action="/auth" method="post">
     <label>
         Login:
         <input class="input auth-form__input" type="text" name="login">
@@ -12,8 +12,8 @@
         Password:
         <input class="input auth-form__input" type="password" name="password">
     </label>
-    <?php if ($error): ?>
-        <p class="auth-form__error"><?=$error?></p>
+    <?php if ($data['error']): ?>
+        <p class="auth-form__error"><?=$data['error']?></p>
     <?php endif; ?>
     <button class="button auth-form__button">Login</button>
 </form>

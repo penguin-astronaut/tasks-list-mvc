@@ -1,6 +1,3 @@
-<?php
-/** @var string $content content of pages. */
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +10,4 @@
 </head>
 <body>
 <div class="wrapper">
-    <?=$content?>
-</div>
-</body>
-</html>
+   
