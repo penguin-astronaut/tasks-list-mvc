@@ -19,11 +19,14 @@ class IndexController {
             header('Location: /');
         }
 
-        $tasks = new Tasks();
-        $res = $tasks->create($_POST['text'] ?? '', $_SESSION['user']);
+        $description = trim(htmlspecialchars($_POST['text'] ?? ''));
+
         $error = '';
-        if ($res['status'] === 'error') {
-            $error = '?error=' . $res['message'];
+        if (!$description) {
+            $error = '?error=' . 'description is required';
+        } else {
+            $tasks = new Tasks();
+            $tasks->create($description, $_SESSION['user']);
         }
 
         header('Location: /' . $error);

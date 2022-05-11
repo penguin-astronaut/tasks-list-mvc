@@ -25,14 +25,6 @@ class Tasks extends \Core\Model
      */
     public function create(string $description, int $userId): array
     {
-        $description = trim(htmlspecialchars($description));
-        if (!$description) {
-            return [
-                'status' => 'error',
-                'message' => 'field description required!'
-            ];
-        }
-
         $sql = "INSERT INTO tasks (user_id, description, status) VALUES (?,?,?)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$userId, $description, self::STATUS_UNREADY]);
