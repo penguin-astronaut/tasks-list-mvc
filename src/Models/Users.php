@@ -3,8 +3,11 @@
 namespace Models;
 
 class Users extends \Core\Model {
-    public const STATUS_USER_NOT_FOUND = 1;
-    public const STATUS_ERROR_PASSWORD = 2;
+    public const STATUS_SUCCESS = 'success';
+    public const STATUS_ERROR = 'error';
+    public const ERROR_CODE_USER_NOT_FOUND = 0;
+    public const ERROR_CODE_PASSWORD = 1;
+
 
     /**
      * @param string $login
@@ -18,7 +21,7 @@ class Users extends \Core\Model {
 
         if (!$login || !$password) {
             return [
-                'status' => 'error',
+                'status' => self::STATUS_ERROR,
                 'message' => 'Login and password are required!'
             ];
         }
@@ -28,20 +31,20 @@ class Users extends \Core\Model {
 
         if (!$user = $stmt->fetch()) {
             return [
-                'status' => 'error',
-                'code' => self::STATUS_USER_NOT_FOUND
+                'status' => self::STATUS_ERROR,
+                'code' => self::ERROR_CODE_USER_NOT_FOUND
             ];
         }
 
         if (!password_verify($password, $user['password'])) {
             return [
-                'status' => 'error',
-                'code' => self::STATUS_ERROR_PASSWORD
+                'status' => self::STATUS_ERROR,
+                'code' => self::ERROR_CODE_PASSWORD
             ];
         }
 
         return [
-            'status' => 'success',
+            'status' => self::STATUS_SUCCESS,
             'user_id' => $user['id']
         ];
     }

@@ -15,21 +15,21 @@ class AuthController
             $users = new Users();
             $res = $users->checkUser($_POST['login'] ?? '', $_POST['password'] ?? '');
 
-            if ($res['status'] === 'success') {
+            if ($res['status'] === Users::STATUS_SUCCESS) {
                 $_SESSION['user'] = $res['user_id'];
                 header('Location: /');
                 die;
-            } elseif ($res['code'] === Users::STATUS_USER_NOT_FOUND) {
+            } elseif ($res['code'] === Users::ERROR_CODE_USER_NOT_FOUND) {
                 $res = $users->create($_POST['login'] ?? '', $_POST['password'] ?? '');
 
-                if ($res['status'] === 'success') {
+                if ($res['status'] === Users::STATUS_SUCCESS) {
                     $_SESSION['user'] = $res['user_id'];
                     header('Location: /');
                     die;
                 }
 
                 $error = $res['message'];
-            } elseif ($res['code'] === Users::STATUS_ERROR_PASSWORD) {
+            } elseif ($res['code'] === Users::ERROR_CODE_PASSWORD) {
                 $error = 'password incorrect';
             }
         }
