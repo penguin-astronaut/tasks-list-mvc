@@ -16,15 +16,6 @@ class Users extends \Core\Model {
      */
     public function checkUser(string $login, string $password): array
     {
-        $login = htmlspecialchars(trim($login));
-        $password = htmlspecialchars(trim($password));
-
-        if (!$login || !$password) {
-            return [
-                'status' => self::STATUS_ERROR,
-                'message' => 'Login and password are required!'
-            ];
-        }
         $sql = "SELECT * FROM users WHERE login=?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$login]);

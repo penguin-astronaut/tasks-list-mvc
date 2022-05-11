@@ -13,7 +13,16 @@ class AuthController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $users = new Users();
-            $res = $users->checkUser($_POST['login'] ?? '', $_POST['password'] ?? '');
+
+            $login = htmlspecialchars(trim($_POST['login'] ?? ''));
+            $password = htmlspecialchars(trim($_POST['password'] ?? ''));
+
+            if (!$login || !$password) {
+                View::render('auth', ['error' => 'Login and password are required!']);
+                return;
+            }
+
+            $res = $users->checkUser($login, $password);
 
             if ($res['status'] === Users::STATUS_SUCCESS) {
                 $_SESSION['user'] = $res['user_id'];
